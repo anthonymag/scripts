@@ -5,7 +5,7 @@ SEASON_NUMBER="11"
 PLAYLIST_PATH="/mnt/media/ytdlm/subscriptions/playlists/masterchef-br-${SEASON_NUMBER}/"
 FILE_PATH="/home/ant/mcbr-${SEASON_NUMBER}-files"
 MEDIA_PATH="/mnt/media/tvshows/MasterChef (BR) (2014) [tvdbid-285626]/Season ${SEASON_NUMBER}"
-PROCESSED_FILE_PATH="${PLAYLIST_PATH}/processed"
+PROCESSED_FILE_PATH="${PLAYLIST_PATH}processed"
 
 episodes="$(ls ${PLAYLIST_PATH}*.mp4 | awk '{print $2}' | uniq)"
 
@@ -24,14 +24,22 @@ for ep in $episodes; do
 
 done
 
-for episode_file in "$(ls ${FILE_PATH}/episode*)"; do
-  # this is a bit of a bold assumption that nothing else in the path has an underscore!
-  episode_number="$(echo $episode_file | cut -d'_' -f2)"
+unset IFS
 
-  ffmpeg -f concat -safe 0 -i "${episode_file}" -c copy "${MEDIA_PATH}/MasterChef (BR) (2014) - S${SEASON_NUMBER}E${episode_number}.mp4"
+for episode_file in ${FILE_PATH}/episode*; do
+  base_file="$(basename $episode_file)"
+  echo "*** Processing ${base_file} ***"
 
-  [ -f "${MEDIA_PATH}/${episode_file}.mp4" ] && mv "${PLAYLIST_PATH}EPISÓDIO ${episode_number}*.mp4" "${PROCESSED_FILE_PATH}/"
+  episode_number="$(echo $base_file | cut -d'_' -f2)"
+  concat_episode_file_name="${MEDIA_PATH}/MasterChef (BR) (2014) - S${SEASON_NUMBER}E${episode_number} - TBA [HDTV-1080p][Opus 2.0][VP9].mp4"
 
-  echo "*** DONE PROCESSING ${episode_file} ***"
+  ffmpeg -f concat -safe 0 -i "${episode_file}" -c copy "${concat_episode_file_name}"
+
+  if [ -f "${concat_episode_file_name}" ]; then
+    echo "Moving ${base_file} parts to processed directory"
+    mv ${PLAYLIST_PATH}EPISÓDIO\ ${episode_number}*.mp4 ${PROCESSED_FILE_PATH}/
+  fi
+
+  echo "*** DONE PROCESSING ${base_file} ***"
 done
 

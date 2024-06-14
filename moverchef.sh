@@ -7,6 +7,13 @@ FILE_PATH="/home/ant/mcbr-${SEASON_NUMBER}-files"
 MEDIA_PATH="/mnt/media/tvshows/MasterChef (BR) (2014) [tvdbid-285626]/Season ${SEASON_NUMBER}"
 PROCESSED_FILE_PATH="${PLAYLIST_PATH}processed"
 
+if ls "$PLAYLIST_PATH"/*.mp4 1> /dev/null 2>&1; then
+    echo "Found files to process"
+else
+    echo "Nothing to do"
+    exit 0
+fi
+
 episodes="$(ls ${PLAYLIST_PATH}*.mp4 | awk '{print $2}' | uniq)"
 
 rm -rf "${FILE_PATH}"

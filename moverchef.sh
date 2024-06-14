@@ -2,7 +2,8 @@
 IFS=$'\n\t'
 
 SEASON_NUMBER="11"
-PLAYLIST_PATH="/mnt/media/ytdlm/subscriptions/playlists/masterchef-br-${SEASON_NUMBER}/"
+#PLAYLIST_PATH="/mnt/media/ytdlm/subscriptions/playlists/masterchef-br-${SEASON_NUMBER}/"
+PLAYLIST_PATH="/mnt/media/ytdlm/users/anthony/subscriptions/playlists/masterchef-br-${SEASON_NUMBER}/"
 FILE_PATH="/home/ant/mcbr-${SEASON_NUMBER}-files"
 MEDIA_PATH="/mnt/media/tvshows/MasterChef (BR) (2014) [tvdbid-285626]/Season ${SEASON_NUMBER}"
 PROCESSED_FILE_PATH="${PLAYLIST_PATH}processed"

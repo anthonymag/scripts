@@ -52,10 +52,10 @@ for episode_file in ${FILE_PATH}/episode*; do
   ffmpeg -f concat -safe 0 -i "${episode_file}" -c copy "${concat_episode_file_name}"
   notify_discord "Processed ${base_file} as ${concat_episode_file_name}"
 
-  if [ -f "${concat_episode_file_name}" ]; then
-    echo "Moving ${base_file} parts to processed directory"
-    mv ${PLAYLIST_PATH}EPISÓDIO\ ${episode_number}*.mp4 ${PROCESSED_FILE_PATH}/
-  fi
+#  if [ -f "${concat_episode_file_name}" ]; then
+#    echo "Moving ${base_file} parts to processed directory"
+#    mv ${PLAYLIST_PATH}EPISÓDIO\ ${episode_number}*.mp4 ${PROCESSED_FILE_PATH}/
+#  fi
 
   echo "*** DONE PROCESSING ${base_file} ***"
 done
